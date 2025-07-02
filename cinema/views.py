@@ -20,8 +20,8 @@ from cinema.serializers import (
     OrderListSerializer,
 )
 
-# ---- Restricted ViewSets ----
 
+# ---- Restricted ViewSets ----
 class GenreViewSet(mixins.ListModelMixin,
                    mixins.CreateModelMixin,
                    viewsets.GenericViewSet):
@@ -63,9 +63,11 @@ class MovieViewSet(mixins.ListModelMixin,
         if title:
             queryset = queryset.filter(title__icontains=title)
         if genres:
-            queryset = queryset.filter(genres__id__in=self._params_to_ints(genres))
+            queryset = (queryset.filter
+                        (genres__id__in=self._params_to_ints(genres)))
         if actors:
-            queryset = queryset.filter(actors__id__in=self._params_to_ints(actors))
+            queryset = (queryset.filter
+                        (actors__id__in=self._params_to_ints(actors)))
 
         return queryset.distinct()
 
